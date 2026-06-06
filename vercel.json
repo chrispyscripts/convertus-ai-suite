@@ -1,0 +1,10 @@
+{
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "rewrites": [
+    { "source": "/ceo", "destination": "/app.html" },
+    { "source": "/regional", "destination": "/app.html" },
+    { "source": "/sales", "destination": "/app.html" },
+    { "source": "/demo", "destination": "/app.html" }
+  ]
+}

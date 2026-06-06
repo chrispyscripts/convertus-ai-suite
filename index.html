@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Convertus AI Suite — Proposal</title>
+<style>
+  :root{
+    --green:#3a7d23; --green-d:#2c5f1a; --green-l:#e8f2e3; --green-xd:#163510;
+    --blue:#1f6f8b; --ink:#1d2421; --muted:#6b7770; --line:#e2e8e0;
+    --bg:#f4f7f2; --card:#ffffff; --amber:#c98a00;
+    --shadow:0 1px 3px rgba(0,0,0,.08),0 10px 30px rgba(20,40,20,.07);
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.6}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 24px}
+  /* header */
+  header{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);
+    border-bottom:1px solid var(--line)}
+  header .wrap{display:flex;align-items:center;justify-content:space-between;height:62px}
+  .logo{font-weight:700;font-size:16px;color:var(--green-d)}
+  .logo span{color:var(--muted);font-weight:500;font-size:12px;display:block;letter-spacing:1.5px;text-transform:uppercase}
+  .hbtn{display:inline-block;background:var(--green);color:#fff;padding:9px 18px;border-radius:8px;font-weight:600;font-size:14px}
+  .hbtn:hover{background:var(--green-d)}
+  /* hero */
+  .hero{background:linear-gradient(160deg,#1d3f12 0%,#2c5f1a 55%,#3a7d23 100%);color:#eaf3e4;padding:84px 0 90px}
+  .hero .tag{display:inline-block;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.25);
+    padding:5px 14px;border-radius:20px;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;margin-bottom:20px}
+  .hero h1{font-size:46px;line-height:1.1;margin:0 0 18px;color:#fff;max-width:760px;letter-spacing:-.5px}
+  .hero p{font-size:19px;max-width:620px;color:#cfe0c6;margin:0 0 30px}
+  .hero .cta{display:flex;gap:12px;flex-wrap:wrap}
+  .btn{display:inline-block;padding:13px 24px;border-radius:9px;font-weight:600;font-size:15px;cursor:pointer;border:0}
+  .btn.p{background:#fff;color:var(--green-d)}
+  .btn.p:hover{background:#eaf3e4}
+  .btn.o{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.5)}
+  .btn.o:hover{background:rgba(255,255,255,.12)}
+  /* stat band */
+  .band{background:var(--green-xd);color:#cfe0c6}
+  .band .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;padding:26px 24px}
+  .band .n{font-size:30px;font-weight:700;color:#fff}
+  .band .l{font-size:12.5px;color:#a8c79a}
+  @media(max-width:780px){.band .wrap{grid-template-columns:repeat(2,1fr)}.hero h1{font-size:34px}}
+  /* sections */
+  section{padding:66px 0}
+  .eyebrow{color:var(--green);font-weight:700;font-size:12.5px;letter-spacing:2px;text-transform:uppercase;margin:0 0 10px}
+  h2{font-size:30px;margin:0 0 14px;letter-spacing:-.4px}
+  .lead{font-size:17px;color:var(--muted);max-width:720px;margin:0 0 8px}
+  .grid{display:grid;gap:20px}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g2{grid-template-columns:repeat(2,1fr)}
+  @media(max-width:880px){.g3,.g2{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:24px}
+  /* tier cards */
+  .tier{display:flex;flex-direction:column;border-top:5px solid var(--green)}
+  .tier.t2{border-top-color:var(--blue)} .tier.t3{border-top-color:var(--amber)}
+  .tier .role{font-size:12px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted)}
+  .tier h3{font-size:21px;margin:6px 0 4px}
+  .tier .persona{font-size:13px;color:var(--muted);margin-bottom:14px}
+  .tier ul{margin:0 0 18px;padding-left:18px;color:#36433b;font-size:14px}
+  .tier ul li{margin-bottom:6px}
+  .tier .open{margin-top:auto;display:inline-block;background:var(--green);color:#fff;text-align:center;
+    padding:11px;border-radius:9px;font-weight:600}
+  .tier.t2 .open{background:var(--blue)} .tier.t3 .open{background:var(--amber)}
+  .tier .open:hover{filter:brightness(.92)}
+  /* tool catalog */
+  .cat{background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px 22px}
+  .cat h4{margin:0 0 10px;font-size:15px;color:var(--green-d)}
+  .cat .chip{display:inline-block;background:var(--green-l);color:var(--green-d);border:1px solid #d3e6c9;
+    padding:5px 11px;border-radius:20px;font-size:12.5px;margin:0 6px 8px 0}
+  /* steps */
+  .step{display:flex;gap:16px;align-items:flex-start;margin-bottom:18px}
+  .step .num{flex-shrink:0;width:34px;height:34px;border-radius:50%;background:var(--green);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-weight:700}
+  .step h4{margin:2px 0 3px;font-size:16px}
+  .step p{margin:0;color:var(--muted);font-size:14.5px}
+  /* highlight */
+  .hl{background:linear-gradient(160deg,#234d16,#163510);color:#eaf3e4;border-radius:16px;padding:40px}
+  .hl h2{color:#fff} .hl .lead{color:#cfe0c6}
+  /* footer */
+  footer{background:var(--green-xd);color:#a8c79a;padding:40px 0;font-size:13px}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
+  .note{font-size:12.5px;color:var(--muted);margin-top:26px;border-top:1px dashed var(--line);padding-top:16px}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="logo">Convertus AI Suite<span>Proposal & Live Demo</span></div>
+    <a class="hbtn" href="/ceo">Open Live Demo →</a>
+  </div>
+</header>
+
+<div class="hero">
+  <div class="wrap">
+    <div class="tag">AI for Organic Waste Operations</div>
+    <h1>An AI platform built for how Convertus actually runs.</h1>
+    <p>Twenty-three AI tools across corporate, sales, operations and site safety — organised into three role-based dashboards for the CEO, Regional Managers and District Sales Managers. Working demo, ready today.</p>
+    <div class="cta">
+      <a class="btn p" href="#tiers">Explore the three tiers</a>
+      <a class="btn o" href="/ceo">Launch the demo</a>
+    </div>
+  </div>
+</div>
+
+<div class="band">
+  <div class="wrap">
+    <div><div class="n">23</div><div class="l">AI tools, live in the demo</div></div>
+    <div><div class="n">3</div><div class="l">Role-based dashboards</div></div>
+    <div><div class="n">10+</div><div class="l">Facilities across North America</div></div>
+    <div><div class="n">300M+</div><div class="l">lbs waste diverted since 2019</div></div>
+  </div>
+</div>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">The opportunity</p>
+    <h2>A growing, multi-site business with no AI today.</h2>
+    <p class="lead">Convertus designs, builds, operates and services organic waste facilities for major municipalities — and just acquired AIM Environmental. That growth multiplies the paperwork, the cross-site coordination, the bids, the compliance, and the safety exposure. The website advertises smart SCADA and VR, but no AI. This suite closes that gap, mapped to the people who run the business.</p>
+    <div class="grid g3" style="margin-top:26px">
+      <div class="card"><h3 style="margin:0 0 6px">Less manual load</h3><p style="margin:0;color:var(--muted);font-size:14.5px">Bids, reports, permits and inbound triage drafted automatically — freeing senior people from repetitive work.</p></div>
+      <div class="card"><h3 style="margin:0 0 6px">Fewer surprises</h3><p style="margin:0;color:var(--muted);font-size:14.5px">Predictive maintenance, safety and contract alerts surface risk before it becomes cost or incident.</p></div>
+      <div class="card"><h3 style="margin:0 0 6px">More wins</h3><p style="margin:0;color:var(--muted);font-size:14.5px">Tender discovery, prospect scoring and ROI tooling build pipeline in a tender-driven market.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="tiers" style="background:#eef3ec">
+  <div class="wrap">
+    <p class="eyebrow">The three tiers</p>
+    <h2>One platform, three dashboards — each its own live page.</h2>
+    <p class="lead">Click any tier to open its working dashboard. Inside, the role switcher (top-right) lets you move between all three, and the Comms Center connects them.</p>
+    <div class="grid g3" style="margin-top:28px">
+
+      <div class="card tier">
+        <div class="role">Tier 1 · Executive</div>
+        <h3>CEO — Executive Cockpit</h3>
+        <div class="persona">Strategy, growth & whole-company oversight</div>
+        <ul>
+          <li>Portfolio cockpit with daily AI briefing</li>
+          <li>Acquisition Screener & Scenario Simulator</li>
+          <li>Board & Investor report generator</li>
+          <li>Policy & competitive radar</li>
+          <li>Growth + M&A pipeline roll-up</li>
+        </ul>
+        <a class="open" href="/ceo">Open CEO dashboard →</a>
+      </div>
+
+      <div class="card tier t2">
+        <div class="role">Tier 2 · Operations</div>
+        <h3>Regional Manager</h3>
+        <div class="persona">Operations across all locations</div>
+        <ul>
+          <li>Ops Command Center & OEE benchmarking</li>
+          <li>Predictive maintenance & asset health</li>
+          <li>Feedstock balancing & RNG yield</li>
+          <li>Workforce / shift planning</li>
+          <li>Safety intelligence & digital permits</li>
+        </ul>
+        <a class="open" href="/regional">Open Regional dashboard →</a>
+      </div>
+
+      <div class="card tier t3">
+        <div class="role">Tier 3 · Sales</div>
+        <h3>District Sales Manager</h3>
+        <div class="persona">Pipeline, bids & municipal accounts</div>
+        <ul>
+          <li>Sales dashboard with live pipeline</li>
+          <li>Tender Radar & Prospect Scorer</li>
+          <li>RFP / proposal co-pilot</li>
+          <li>Value / ROI calculator</li>
+          <li>Account inbox & knowledge base</li>
+        </ul>
+        <a class="open" href="/sales">Open Sales dashboard →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">What's inside</p>
+    <h2>The full tool catalogue.</h2>
+    <p class="lead">Twenty-three tools, distributed across the three roles and four domains.</p>
+    <div class="grid g2" style="margin-top:26px">
+      <div class="cat"><h4>Corporate & Admin</h4>
+        <span class="chip">RFP Co-pilot</span><span class="chip">Knowledge Base</span><span class="chip">Contract Tracker</span><span class="chip">ESG Reporting</span><span class="chip">AIM Integration</span><span class="chip">Inbox Triage</span>
+      </div>
+      <div class="cat"><h4>Growth & Sales</h4>
+        <span class="chip">Tender Radar</span><span class="chip">Prospect Scorer</span><span class="chip">ROI Calculator</span><span class="chip">Acquisition Screener</span>
+      </div>
+      <div class="cat"><h4>Operations</h4>
+        <span class="chip">Ops Command Center</span><span class="chip">Predictive Maintenance</span><span class="chip">Feedstock Balancer</span><span class="chip">Energy & RNG Optimizer</span><span class="chip">Workforce Planner</span><span class="chip">Capital Projects</span>
+      </div>
+      <div class="cat"><h4>Site Safety</h4>
+        <span class="chip">Safety Intelligence</span><span class="chip">Permits & Compliance</span><span class="chip">Contractor QR Sign-In</span>
+      </div>
+      <div class="cat"><h4>Leadership & Strategy</h4>
+        <span class="chip">Executive Cockpit</span><span class="chip">Board & Investor Reports</span><span class="chip">Scenario Simulator</span><span class="chip">Policy & Competitive Radar</span>
+      </div>
+      <div class="cat"><h4>Connecting it all</h4>
+        <span class="chip">Cross-role Comms Center</span><span class="chip">Role-based dashboards</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section style="background:#eef3ec">
+  <div class="wrap">
+    <div class="hl">
+      <p class="eyebrow" style="color:#a8c79a">Connected leadership</p>
+      <h2>The tiers talk to each other.</h2>
+      <p class="lead">A built-in communication layer lets the CEO send directives down, managers escalate up, and everyone acknowledge and track actions — so the whole leadership team works from one live picture. Open any tier and try the Comms Center.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="eyebrow">How we'd roll it out</p>
+    <h2>From demo to production.</h2>
+    <div style="margin-top:26px;max-width:760px">
+      <div class="step"><div class="num">1</div><div><h4>Prove the workflow (this demo)</h4><p>Clickable suite with realistic Convertus data, so stakeholders see exactly what each role gets.</p></div></div>
+      <div class="step"><div class="num">2</div><div><h4>Connect the data</h4><p>Wire dashboards to live SCADA, finance, HR, document stores and procurement portals; connect the AI to a production model.</p></div></div>
+      <div class="step"><div class="num">3</div><div><h4>Pilot with one tier</h4><p>Start with the highest-leverage role — Sales or Operations — measure impact, then expand across the leadership team.</p></div></div>
+      <div class="step"><div class="num">4</div><div><h4>Scale across all sites</h4><p>Roll out company-wide with permissions, audit trails and real cross-role communication.</p></div></div>
+    </div>
+    <p class="note">This is a prototype: data and AI responses are realistic samples to demonstrate the workflow, not connected to live Convertus systems.</p>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="card" style="text-align:center;padding:46px">
+      <h2 style="margin-bottom:10px">See it in action.</h2>
+      <p class="lead" style="margin:0 auto 24px">Open the live demo and switch between the CEO, Regional Manager and District Sales Manager views.</p>
+      <div class="cta" style="justify-content:center">
+        <a class="btn" style="background:var(--green);color:#fff" href="/ceo">CEO</a>
+        <a class="btn" style="background:var(--blue);color:#fff" href="/regional">Regional Manager</a>
+        <a class="btn" style="background:var(--amber);color:#fff" href="/sales">District Sales Manager</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div><strong style="color:#fff">Convertus AI Suite</strong> · Proposal & working demo</div>
+    <div>Prototype · simulated AI · sample data only</div>
+  </div>
+</footer>
+
+</body>
+</html>
