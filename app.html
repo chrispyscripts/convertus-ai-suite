@@ -683,17 +683,17 @@ const TOOLS={
  acq:{l:"Acquisition Screener",i:"⌖"}, board:{l:"Board & Investor Reports",i:"▥"}, scenario:{l:"Scenario Simulator",i:"⎘"},
  policy:{l:"Policy & Competitive Radar",i:"🛰"}, opscenter:{l:"Ops Command Center",i:"◧"}, predmaint:{l:"Predictive Maintenance",i:"🔧"},
  feedstock:{l:"Feedstock Balancer",i:"⚖"}, energy:{l:"Energy & RNG Optimizer",i:"⚡"}, workforce:{l:"Workforce Planner",i:"👥"},
- capproj:{l:"Capital Projects",i:"🏗"}, comms:{l:"Comms Center",i:"💬"}
+ capproj:{l:"Capital Projects",i:"🏗"}, comms:{l:"Comms Center",i:"💬"}, crm:{l:"CRM Sync & Forecast",i:"📈"}
 };
 const ROLES={
  ceo:{dashLabel:"Executive Cockpit", dash:"ceoDash", who:"Sandra Mboto · Chief Executive Officer",
-   tools:[['Strategy',['acq','board','scenario','policy']],['Growth',['tender','prospect','roi']],
+   tools:[['Strategy',['acq','board','scenario','policy']],['Growth',['tender','prospect','roi','crm']],
           ['Portfolio',['capproj','contracts','esg','aim']],['Communicate',['comms']]]},
  gm:{dashLabel:"Operations Command Center", dash:"gmDash", who:"Raj Patel · Regional Manager (Operations)",
    tools:[['Operations',['opscenter','predmaint','feedstock','energy','workforce']],['Safety',['safety','permits','contractors']],
           ['Portfolio',['capproj','contracts','esg']],['Communicate',['comms']]]},
  rm:{dashLabel:"Sales Dashboard", dash:"rmDash", who:"Erin Doyle · District Sales Manager",
-   tools:[['My Pipeline',['tender','prospect','roi','rfp']],['Accounts',['contracts','inbox','kb']],
+   tools:[['My Pipeline',['tender','prospect','roi','crm','rfp']],['Accounts',['contracts','inbox','kb']],
           ['Communicate',['comms']]]}
 };
 let MSGS=[
@@ -909,8 +909,52 @@ VIEWS.rmDash=()=>{const deals=TENDERS.filter(t=>t.go!=='PASS');
    <td style="min-width:110px"><div class="bar"><i style="width:${t.fit}%;background:${t.fit>=80?'var(--green)':'var(--amber)'}"></i></div><span class="small">${t.fit}%</span></td>
    <td>${t.go==='GO'?'<span class="chip g">GO</span>':'<span class="chip a">REVIEW</span>'}</td></tr>`).join('')}</tbody></table></div>
  ${commsWidget()}
+ <div class="card" style="cursor:pointer;border-left:4px solid var(--green)" onclick="go('crm')"><div class="row" style="justify-content:space-between;align-items:center">
+   <div><strong>📈 CRM Sync & Forecast</strong><p class="small" style="margin:6px 0 0">Salesforce connected · weighted forecast this quarter <b>$4.2M</b> · <span style="color:var(--red)">2 deals at risk</span></p></div>
+   <span class="btn sec" style="padding:6px 12px">Open →</span></div></div>
  <div class="grid g2"><div class="card" style="cursor:pointer" onclick="go('prospect')"><strong>◎ Prospect pipeline</strong><p class="small" style="margin:6px 0 0">5 targets · Winnipeg top at 94/100</p></div>
   <div class="card" style="cursor:pointer" onclick="go('roi')"><strong>∑ ROI Calculator</strong><p class="small" style="margin:6px 0 0">Build a value case for any prospect</p></div></div>`;};
+
+/* ---- CRM sync & forecast ---- */
+const FORECAST=[
+ {q:"Q2 2026", proj:4.2, target:4.0},
+ {q:"Q3 2026", proj:6.8, target:5.5},
+ {q:"Q4 2026", proj:5.1, target:6.0},
+ {q:"Q1 2027", proj:7.4, target:6.5}
+];
+const WEAK=[
+ {issue:"Stage drop-off — Proposal → Negotiation", detail:"Only 38% of proposals advance vs 55% benchmark.", sev:"red", act:"Attach ROI one-pager earlier; review pricing/value framing."},
+ {issue:"At-risk renewal — City of London", detail:"Renewal in <60 days; account sentiment declining.", sev:"red", act:"Escalate to CEO; tie to the ops mitigation plan already in motion."},
+ {issue:"Stalled deal — Capital Regional District", detail:"Proposal sent, no activity in 18 days, no follow-up booked.", sev:"amber", act:"Book follow-up now — CRD is a warm account (rated GO in Tender Radar)."},
+ {issue:"Neglected account — City of Kingston", detail:"Contract expires 2027, no touch in 60 days.", sev:"amber", act:"Proactive outreach — prospect score 86; risk of competitor entry."},
+ {issue:"Win-rate dip — large municipal bids", detail:"22% win rate on >$10M bids vs 41% overall.", sev:"amber", act:"Bid-team review; concentrate on best-fit large tenders."}
+];
+VIEWS.crm=()=>{
+ const max=Math.max(...FORECAST.map(f=>Math.max(f.proj,f.target)));
+ return `<h2 class="page">CRM Sync & Forecast</h2>
+ <p class="sub">Connected by API to your existing CRM — deal, account and activity data is pulled on a schedule and blended with tender, contract and capacity data to project sales and surface weaknesses. Scores and matches are written back to your CRM records automatically.</p>
+ <div class="row" style="margin-bottom:14px"><span class="chip g">● Connected: Salesforce</span><span class="small">Last sync 9 min ago · 1,284 records · bi-directional</span></div>
+ <div class="grid g3" style="margin-bottom:16px">
+  <div class="stat"><div class="n">$4.2M</div><div class="l">Weighted forecast — this quarter</div></div>
+  <div class="stat"><div class="n">41%</div><div class="l">Overall win rate (12 mo)</div></div>
+  <div class="stat"><div class="n" style="color:var(--red)">2</div><div class="l">Deals at risk</div></div>
+ </div>
+ <div class="card"><div class="ai-badge">◆ Sales projection (weighted pipeline)</div>
+  <table style="margin-top:8px"><thead><tr><th>Quarter</th><th style="width:55%">Projected vs target</th><th>Projected</th><th>Target</th><th>Call</th></tr></thead><tbody>
+  ${FORECAST.map(f=>{const hit=f.proj>=f.target;return `<tr><td><b>${f.q}</b></td>
+    <td><div style="position:relative;background:#eef3ec;border-radius:6px;height:18px">
+      <div style="position:absolute;left:0;top:0;bottom:0;width:${Math.round(f.proj/max*100)}%;background:${hit?'var(--green)':'var(--amber)'};border-radius:6px"></div>
+      <div style="position:absolute;top:-3px;bottom:-3px;left:${Math.round(f.target/max*100)}%;width:2px;background:var(--ink)" title="target"></div></div></td>
+    <td><b>$${f.proj}M</b></td><td>$${f.target}M</td><td>${hit?'<span class="chip g">On/above</span>':'<span class="chip a">Below</span>'}</td></tr>`;}).join('')}
+  </tbody></table>
+  <div class="small" style="margin-top:8px">Bars = weighted projection · vertical line = target. Projections use historical win rates, deal velocity, tender cycles and seasonality — capped at available plant capacity.</div></div>
+ <div class="card"><div class="ai-badge">◆ Weakness detection</div>
+  <table><thead><tr><th>Flag</th><th>What the data shows</th><th>Severity</th><th>Recommended action</th></tr></thead><tbody>
+  ${WEAK.map(w=>`<tr><td><b>${w.issue}</b></td><td class="small">${w.detail}</td><td>${chip(w.sev)}</td><td class="small">${w.act}</td></tr>`).join('')}
+  </tbody></table></div>
+ <div class="card"><div class="ai-badge">◆ Auto-enriched in your CRM</div>
+  This quarter the sync attached <b>5 Tender Radar matches</b>, <b>5 prospect scores</b> and <b>3 ROI value cases</b> to the right accounts in Salesforce — so reps open a record and the homework is already done. Win/loss patterns fed back from closed deals are sharpening the next forecast.</div>`;
+};
 
 /* ---------- router (role-aware) ---------- */
 function buildNav(){const r=ROLES[ROLE];
