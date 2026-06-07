@@ -98,6 +98,19 @@
   @media(max-width:820px){.flow{grid-template-columns:1fr 1fr}.fstep:not(:last-child)::after{display:none}}
   .conn{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
   .conn span{font-size:12.5px;color:var(--muted);background:#fff;border:1px solid var(--line);border-radius:20px;padding:5px 12px}
+  .cmp{width:100%;border-collapse:collapse;margin-top:24px;background:#fff;border:1px solid var(--line);border-radius:14px;overflow:hidden;box-shadow:var(--shadow)}
+  .cmp th,.cmp td{padding:14px 18px;text-align:left;border-bottom:1px solid var(--line);font-size:14.5px;vertical-align:top}
+  .cmp thead th{background:var(--bg);font-size:13px;text-transform:uppercase;letter-spacing:.5px}
+  .cmp td.dim{font-weight:600;color:#36433b;width:24%}
+  .cmp .ai{background:var(--green-l)}
+  .cmp thead th.ai{color:var(--green-d)}
+  .cmp tr:last-child td{border-bottom:0}
+  .cmp .x{color:#b04a3f;font-weight:700} .cmp .ok{color:var(--green-d);font-weight:700}
+  @media(max-width:720px){.cmp th,.cmp td{padding:11px 12px;font-size:13px}}
+  .econ-band{background:linear-gradient(120deg,#234d16,#163510);color:#cfe0c6;border-radius:16px;padding:34px;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;margin-top:24px}
+  .econ-band .n{font-size:30px;font-weight:700;color:#fff}
+  .econ-band .l{font-size:13px;color:#a8c79a}
+  @media(max-width:780px){.econ-band{grid-template-columns:1fr 1fr}}
 </style>
 </head>
 <body>
@@ -112,6 +125,7 @@
       <a class="j" href="#crm">CRM</a>
       <a class="j" href="#ma">M&amp;A</a>
       <a class="j" href="#brain">Assistant</a>
+      <a class="j" href="#grow">Why AI</a>
       <a class="hbtn" href="/ceo">Open Live Demo →</a>
     </div>
   </div>
@@ -397,6 +411,73 @@
           <a class="opn" href="/sales">Open Sales dashboard →</a>
         </div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== GROW WITHOUT HEADCOUNT ===================== -->
+<section id="grow" style="background:#eef3ec">
+  <div class="wrap">
+    <p class="eyebrow">The growth dilemma</p>
+    <h2>Expanding means more work. You can hire for it — or scale it.</h2>
+    <p class="lead">More sites, more bids, more contracts, more compliance, more inboxes. Convertus is growing fast, and that workload has to go somewhere. The traditional answer is to keep adding headcount. The AI suite absorbs the repetitive part of that growth instead — so the business expands without the cost, delay and risk of staffing up for every new task.</p>
+    <table class="cmp">
+      <thead><tr><th>As you grow…</th><th>Hire more staff</th><th class="ai">Add the AI Suite</th></tr></thead>
+      <tbody>
+        <tr><td class="dim">Cost to add capacity</td><td>$70–120k+ salary &amp; benefits per role, every year</td><td class="ai">One platform — a fraction of a single salary, covering every role</td></tr>
+        <tr><td class="dim">Time to productivity</td><td>Weeks to recruit, then months to ramp up</td><td class="ai">Live in days, no ramp</td></tr>
+        <tr><td class="dim">Scaling to new sites &amp; acquisitions</td><td>Hire again for each new location</td><td class="ai">Same system extends instantly — near-zero marginal cost</td></tr>
+        <tr><td class="dim">Consistency</td><td>Varies by person; errors and rework</td><td class="ai">Same standard every time, fully auditable</td></tr>
+        <tr><td class="dim">Availability</td><td>Business hours, PTO, sick days</td><td class="ai">24/7 — never off</td></tr>
+        <tr><td class="dim">Knowledge retention</td><td>Walks out the door when people leave</td><td class="ai">Institutional memory stays and compounds</td></tr>
+      </tbody>
+    </table>
+    <p class="lead" style="margin-top:18px">It isn't either/or — it's about <b>what you hire for</b>. Use AI for the repetitive, scalable work, and reserve new hires for the judgment and relationships only people can provide.</p>
+  </div>
+</section>
+
+<!-- ===================== ECONOMICS ===================== -->
+<section id="econ">
+  <div class="wrap">
+    <p class="eyebrow">The economics</p>
+    <h2>The math of scaling with software.</h2>
+    <p class="lead">Headcount cost grows in a straight line with the business. Software doesn't — once it's built, each new site, bid or report it handles is almost free. That gap is the return.</p>
+    <div class="econ-band">
+      <div><div class="n">≈ $0</div><div class="l">Marginal cost to cover each new site</div></div>
+      <div><div class="n">Days</div><div class="l">To onboard a role — vs months to hire &amp; train</div></div>
+      <div><div class="n">24/7</div><div class="l">Working — no PTO, no turnover, no rework</div></div>
+      <div><div class="n">1</div><div class="l">Platform replacing repetitive work across every role</div></div>
+    </div>
+    <p class="note" style="border:0;padding-top:14px">Even if the suite only offsets a portion of one back-office hire per function, it pays for itself — and the value grows with every site and acquisition added.</p>
+  </div>
+</section>
+
+<!-- ===================== FREES YOUR PEOPLE ===================== -->
+<section style="background:#eef3ec">
+  <div class="wrap">
+    <p class="eyebrow">Leverage, not replacement</p>
+    <h2>Put your people on the work that actually needs them.</h2>
+    <p class="lead">The suite doesn't replace your team — it removes the repetitive load so your best people spend their hours where humans win: judgment, relationships and growth.</p>
+    <div class="grid g3" style="margin-top:26px">
+      <div class="card"><h3 style="margin:0 0 6px;font-size:17px">Win the deals</h3><p style="margin:0;color:var(--muted);font-size:14px">Sales spends time building municipal relationships and negotiating — not rewriting boilerplate bids or chasing the inbox.</p></div>
+      <div class="card"><h3 style="margin:0 0 6px;font-size:17px">Run the plants</h3><p style="margin:0;color:var(--muted);font-size:14px">Managers focus on optimization and safety leadership — not assembling reports or hunting down site status.</p></div>
+      <div class="card"><h3 style="margin:0 0 6px;font-size:17px">Lead the company</h3><p style="margin:0;color:var(--muted);font-size:14px">Executives spend their time on strategy and growth — not stitching together board decks from ten spreadsheets.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== WHY NOW ===================== -->
+<section id="whynow">
+  <div class="wrap">
+    <p class="eyebrow">Why now</p>
+    <h2>The cost of waiting is rising.</h2>
+    <div class="grid g3" style="margin-top:26px">
+      <div class="card"><h3 style="margin:0 0 6px;font-size:17px">⏳ Skilled labor is scarce</h3><p style="margin:0;color:var(--muted);font-size:14px">Hiring experienced operators, estimators and compliance staff is slow and expensive — and getting harder. AI capacity is available immediately.</p></div>
+      <div class="card"><h3 style="margin:0 0 6px;font-size:17px">🏁 Competitors are moving</h3><p style="margin:0;color:var(--muted);font-size:14px">The firms that adopt AI first bid faster, run leaner and win more. In a tender-driven market, that edge compounds.</p></div>
+      <div class="card"><h3 style="margin:0 0 6px;font-size:17px">🌱 First-mover in organics</h3><p style="margin:0;color:var(--muted);font-size:14px">Convertus has no AI today. Being early in this sector is a durable advantage — in efficiency, in margins, and in how you pitch municipalities.</p></div>
+      <div class="card"><h3 style="margin:0 0 6px;font-size:17px">📉 Manual work is margin lost</h3><p style="margin:0;color:var(--muted);font-size:14px">Every month of doing it by hand is hours, missed renewals and slow bids — real money left on the table while you scale.</p></div>
+      <div class="card"><h3 style="margin:0 0 6px;font-size:17px">📈 Built for your trajectory</h3><p style="margin:0;color:var(--muted);font-size:14px">With AIM acquired and new sites coming, the complexity is only increasing. Put the platform in now, before the next growth wave.</p></div>
+      <div class="card"><h3 style="margin:0 0 6px;font-size:17px">✅ Low-risk to start</h3><p style="margin:0;color:var(--muted);font-size:14px">Begin with one tier, prove the impact on real workflows, then expand. The working demo is already in your hands.</p></div>
     </div>
   </div>
 </section>
