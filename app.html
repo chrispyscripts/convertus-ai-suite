@@ -94,6 +94,11 @@
   .msg{border:1px solid var(--line);border-radius:10px;padding:12px;margin-bottom:10px;background:#fcfdfc}
   .msg.un{border-left:4px solid var(--amber)}
   .msg .h{display:flex;justify-content:space-between;gap:8px;align-items:center}
+  .bm-msg{display:flex;gap:10px;margin-bottom:12px;align-items:flex-start;animation:bmin .3s ease}
+  .bm-av{width:34px;height:34px;border-radius:8px;color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+  .bm-b{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:13.5px;flex:1}
+  .bm-b .nm{font-size:11px;color:var(--muted);font-weight:600;margin-bottom:3px}
+  @keyframes bmin{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
 </style>
 </head>
 <body>
@@ -683,11 +688,12 @@ const TOOLS={
  acq:{l:"Acquisition Screener",i:"⌖"}, board:{l:"Board & Investor Reports",i:"▥"}, scenario:{l:"Scenario Simulator",i:"⎘"},
  policy:{l:"Policy & Competitive Radar",i:"🛰"}, opscenter:{l:"Ops Command Center",i:"◧"}, predmaint:{l:"Predictive Maintenance",i:"🔧"},
  feedstock:{l:"Feedstock Balancer",i:"⚖"}, energy:{l:"Energy & RNG Optimizer",i:"⚡"}, workforce:{l:"Workforce Planner",i:"👥"},
- capproj:{l:"Capital Projects",i:"🏗"}, comms:{l:"Comms Center",i:"💬"}, crm:{l:"CRM Sync & Forecast",i:"📈"}
+ capproj:{l:"Capital Projects",i:"🏗"}, comms:{l:"Comms Center",i:"💬"}, crm:{l:"CRM Sync & Forecast",i:"📈"},
+ boardroom:{l:"Virtual Boardroom",i:"🏛"}
 };
 const ROLES={
  ceo:{dashLabel:"Executive Cockpit", dash:"ceoDash", who:"Sandra Mboto · Chief Executive Officer",
-   tools:[['Strategy',['acq','board','scenario','policy']],['Growth',['tender','prospect','roi','crm']],
+   tools:[['Strategy',['boardroom','acq','board','scenario','policy']],['Growth',['tender','prospect','roi','crm']],
           ['Portfolio',['capproj','contracts','esg','aim']],['Communicate',['comms']]]},
  gm:{dashLabel:"Operations Command Center", dash:"gmDash", who:"Raj Patel · Regional Manager (Operations)",
    tools:[['Operations',['opscenter','predmaint','feedstock','energy','workforce']],['Safety',['safety','permits','contractors']],
@@ -870,6 +876,7 @@ VIEWS.ceoDash=()=>`
   <div class="stat"><div class="n">3</div><div class="l">Capital projects active</div></div></div>
  <div class="card" style="margin-top:16px"><div class="row" style="justify-content:space-between"><strong>Portfolio monitoring — by region (rolls up Regional Operations)</strong><button class="btn sec" style="padding:5px 12px" onclick="go('opscenter')">Open Ops Center</button></div>
   <table style="margin-top:10px"><thead><tr><th>Region</th><th>Sites</th><th>Avg OEE</th><th>Avg uptime</th><th>Status</th></tr></thead><tbody>${regionRollup()}</tbody></table></div>
+ <div class="card" style="cursor:pointer;border-left:4px solid var(--green)" onclick="go('boardroom')"><div class="row" style="justify-content:space-between;align-items:center"><div><strong>🏛 Virtual Boardroom</strong><p class="small" style="margin:6px 0 0">Convene your leaders' AI agents to deliberate a decision — get a brief with recommendation, risks &amp; dissent.</p></div><span class="btn sec" style="padding:6px 12px">Convene →</span></div></div>
  ${commsWidget()}
  <div class="grid g2"><div class="card" style="cursor:pointer" onclick="go('tender')"><strong>📡 Growth pipeline</strong><p class="small" style="margin:6px 0 0">3 tenders rated GO · $128M+ surfaced</p></div>
   <div class="card" style="cursor:pointer" onclick="go('acq')"><strong>⌖ M&A pipeline</strong><p class="small" style="margin:6px 0 0">2 targets to pursue · ~$37M combined revenue</p></div></div>`;
@@ -955,6 +962,124 @@ VIEWS.crm=()=>{
  <div class="card"><div class="ai-badge">◆ Auto-enriched in your CRM</div>
   This quarter the sync attached <b>5 Tender Radar matches</b>, <b>5 prospect scores</b> and <b>3 ROI value cases</b> to the right accounts in Salesforce — so reps open a record and the homework is already done. Win/loss patterns fed back from closed deals are sharpening the next forecast.</div>`;
 };
+
+/* ---- Virtual Boardroom (multi-agent deliberation) ---- */
+const AGENTS={
+ ceo:{n:"CEO Agent",r:"Chair · Strategy",c:"#3a7d23",ini:"CE"},
+ ops:{n:"Regional Mgr Agent",r:"Operations",c:"#1f6f8b",ini:"OP"},
+ sales:{n:"Sales Mgr Agent",r:"Pipeline",c:"#c98a00",ini:"SA"},
+ cfo:{n:"CFO Agent",r:"Finance",c:"#6a4ea3",ini:"CF"},
+ safety:{n:"Safety Agent",r:"Compliance",c:"#b04a3f",ini:"SF"}
+};
+const BOARDROOM={
+ waterloo:{topic:"Should we pursue the Waterloo tender, and can we deliver it?",
+  turns:[
+   {a:'ceo',t:"Agenda: the Waterloo organics tender closes July 18. I want a bid/no-bid call and, if we bid, an honest deliverability read. Sales, open us up."},
+   {a:'sales',t:"Strong opportunity — ~$60M over 10 years, rated 92% fit, and CRD-adjacent relationships help us. It's our highest-value live tender. I recommend we bid."},
+   {a:'ops',t:"I back the strategy but flag delivery: London is already at 118% capacity and three Ontario assets have open alerts. New volume needs the feedstock-balancer plan and likely a capacity decision before we commit tonnage."},
+   {a:'cfo',t:"Margin only works if we don't absorb it on overtime. If we need additional tunnels, that's capital — I'd want $4–6M capex modelled before we sign delivery terms."},
+   {a:'safety',t:"Whatever we add, night-shift coverage is already thin in Ontario where the near-misses cluster. Tie any ramp to a staffing and safety plan, or we inherit risk."},
+   {a:'sales',t:"Fair. We can phase intake and lean on Hamilton's headroom for year one while capacity is decided — keeps us competitive without over-committing."},
+   {a:'ops',t:"Agreed — Hamilton has ~120 t/day headroom. A phased ramp is deliverable. I'd condition the bid's delivery schedule on that."},
+   {a:'ceo',t:"Consensus forming: bid yes, condition delivery on a phased capacity plan. Let me synthesize."}
+  ],
+  brief:{rec:"BID — with a phased delivery plan conditioned on Ontario capacity.",
+   opts:["Bid with phased ramp using Hamilton headroom (recommended)","Bid at full volume + approve $4–6M tunnel capex now","No-bid and protect current capacity"],
+   risks:["London over-capacity if the ramp is mis-timed","Capex approval timeline vs the tender deadline","Thin night-shift staffing in Ontario"],
+   dissent:"CFO would prefer capex approved before signing full-volume terms; the phased approach defers that decision but doesn't remove it.",
+   actions:[["sales","Submit bid with a phased delivery schedule by Jul 15"],["ops","Finalize the London→Hamilton feedstock-balancer plan"],["cfo","Model tunnel capex scenarios for year 2"]]}},
+ london:{topic:"How do we de-risk the London renewal and capacity overrun?",
+  turns:[
+   {a:'ceo',t:"London renews in under 60 days, is running 118% of capacity, and the performance report is outstanding. I need a plan that protects the renewal. Ops?"},
+   {a:'ops',t:"Immediate move: reroute ~40 t/day to Hamilton's headroom and address the Bay 4 pile-temp risk. That relieves capacity within days and stabilizes the performance metrics."},
+   {a:'safety',t:"Bay 4 self-heating is my priority — turning and aeration within the hour. Night shift is also two short; I want that covered before we lean on the team further."},
+   {a:'sales',t:"Client sentiment is slipping. I'll get ahead of it with the Q3 diversion numbers and the 2.9% gate-fee adjustment, and book a renewal call this week."},
+   {a:'cfo',t:"Penalty clause 7.3 is the exposure if the performance report stays open. Clearing it is worth more than the overtime cost of the reroute."},
+   {a:'ceo',t:"Clear alignment: stabilize ops, cover safety, get in front of the client. Synthesizing."}
+  ],
+  brief:{rec:"Stabilize and protect the renewal: reroute capacity, close the safety risk, and proactively re-engage the client this week.",
+   opts:["Reroute + proactive client re-engagement (recommended)","Request a short renewal extension to buy time","Accept the overage and absorb penalty risk"],
+   risks:["Penalty clause 7.3 if the performance report stays open","Bay 4 self-heating / fire risk","Thin night-shift coverage"],
+   dissent:"Sales would prefer an extension to negotiate from strength; Ops believes the reroute resolves the issue faster than renegotiating timelines.",
+   actions:[["ops","Execute London→Hamilton reroute (~40 t/day)"],["safety","Action Bay 4 aeration and cover the night shift"],["sales","Send Q3 numbers and book the renewal call"]]}},
+ acq:{topic:"Which acquisition target should we prioritize next?",
+  turns:[
+   {a:'ceo',t:"Post-AIM we keep building the roll-up. The screener rates PrairieOrganics and Atlantic Compost as 'pursue'. Which do we move on first? CFO?"},
+   {a:'cfo',t:"PrairieOrganics is $22M revenue at a 90 fit; Atlantic is $15M at 84. Prairie has the better return profile — but I want vendor-overlap synergies confirmed before we price either."},
+   {a:'ops',t:"Prairie fills a real prairie gap near the new Saskatoon demand — it extends us logically. Atlantic is more of a stretch from our current footprint."},
+   {a:'sales',t:"Prairie also positions us for the Saskatoon tender already on the radar. There's a pipeline tailwind, not just an asset."},
+   {a:'safety',t:"Either deal means harmonizing two safety programs. Prairie's smaller footprint is the easier, lower-risk integration."},
+   {a:'ceo',t:"Prairie leads on fit, returns, geography and pipeline. Let me capture it."}
+  ],
+  brief:{rec:"Prioritize PrairieOrganics; keep Atlantic Compost as the next target in sequence.",
+   opts:["Pursue PrairieOrganics first (recommended)","Pursue Atlantic Compost first","Run both diligence tracks in parallel"],
+   risks:["Vendor-overlap synergies still to be confirmed","Integration bandwidth post-AIM","Financing two deals close together"],
+   dissent:"Ops notes integration bandwidth is still stretched from AIM; CFO is comfortable provided synergies are validated first.",
+   actions:[["cfo","Validate vendor-overlap synergies and price Prairie"],["ops","Scope the Prairie integration plan"],["sales","Link Prairie to the Saskatoon tender pipeline"]]}}
+};
+function genericMeeting(topic){return {topic, turns:[
+  {a:'ceo',t:`Agenda: ${topic}. I want each function's read and a recommendation. Sales, start.`},
+  {a:'sales',t:`From a growth and customer angle this affects our pipeline and municipal relationships. I see upside if we move deliberately and keep clients informed.`},
+  {a:'ops',t:`Operationally the constraint is capacity and uptime across sites. I can support it provided we sequence the work and protect throughput where we're already running hot.`},
+  {a:'cfo',t:`Financially I want the margin and capital impact modelled first. If it's cost-neutral or accretive within plan, I'm comfortable.`},
+  {a:'safety',t:`My condition is that staffing and compliance keep pace — no change that outruns our coverage or permits.`},
+  {a:'ceo',t:`Good — there's a workable path with conditions. Synthesizing now.`}
+ ], brief:{
+   rec:`Proceed on "${topic}" with a phased, conditions-based plan.`,
+   opts:["Move now with a phased rollout (recommended)","Run a 30-day pilot first","Hold pending more data"],
+   risks:["Capacity / throughput strain if sequencing slips","Capital or margin impact to confirm","Staffing and compliance must keep pace"],
+   dissent:"CFO prefers the financial model finalized before full commitment; a pilot mitigates this.",
+   actions:[["sales","Prepare a customer / pipeline impact summary"],["ops","Draft a sequencing and capacity plan"],["cfo","Model the margin and capital impact"]]}};}
+
+let BM_CUR=null;
+VIEWS.boardroom=()=>`
+ <h2 class="page">Virtual Boardroom</h2>
+ <p class="sub">Convene your leadership team's AI agents to deliberate a topic behind the scenes. Each agent argues from its role's live data, then the chair synthesizes a decision brief with recommendation, risks and dissent. Decision-support only — nothing executes without human approval. (You can switch roles top-right; the demo runs the same regardless of who's watching.)</p>
+ <div class="card">
+  <label class="fld">Agenda topic</label>
+  <select id="bmTopic" onchange="bmToggle()">
+   <option value="waterloo">Should we pursue the Waterloo tender, and can we deliver it?</option>
+   <option value="london">How do we de-risk the London renewal + capacity overrun?</option>
+   <option value="acq">Which acquisition target should we prioritize next?</option>
+   <option value="custom">✎ Custom topic…</option>
+  </select>
+  <div id="bmCustomWrap" class="hide" style="margin-top:10px"><label class="fld">Your topic</label><input type="text" id="bmCustom" placeholder="Type any decision for the board to deliberate…"></div>
+  <div class="row" style="margin-top:12px"><button class="btn" onclick="convene()">▶ Convene meeting</button>
+   <span class="small">Attendees: CEO · Regional Mgr · Sales · CFO · Safety — all AI agents</span></div>
+ </div>
+ <div id="bmThread" style="margin-top:6px"></div>
+ <div id="bmBrief" class="hide"></div>`;
+window.bmToggle=()=>{$("#bmCustomWrap").classList.toggle('hide',$("#bmTopic").value!=='custom');};
+function bmTurn(turns,i,thread,m){
+ if(i>=turns.length){bmBrief(m);return;}
+ const tn=turns[i],ag=AGENTS[tn.a],el=document.createElement('div');el.className='bm-msg';
+ el.innerHTML=`<div class="bm-av" style="background:${ag.c}">${ag.ini}</div><div class="bm-b"><div class="nm">${ag.n} · ${ag.r}</div><span class="typing">typing…</span></div>`;
+ thread.appendChild(el);el.scrollIntoView({behavior:'smooth',block:'nearest'});
+ setTimeout(()=>{el.querySelector('.bm-b').innerHTML=`<div class="nm">${ag.n} · ${ag.r}</div>${tn.t}`;
+  setTimeout(()=>bmTurn(turns,i+1,thread,m),650);},650);
+}
+function bmBrief(m){const b=m.brief,el=$("#bmBrief");el.classList.remove('hide');
+ el.innerHTML=`<div class="card"><div class="ai-badge">◆ Decision brief — auto-synthesized</div>
+  <h3 style="margin:4px 0 10px">${m.topic}</h3>
+  <div class="out"><b>Recommendation:</b> ${b.rec}</div>
+  <div class="grid g2" style="margin-top:14px">
+   <div><strong>Options considered</strong><ul class="small" style="margin:8px 0 0">${b.opts.map(o=>`<li>${o}</li>`).join('')}</ul></div>
+   <div><strong>Key risks</strong><ul class="small" style="margin:8px 0 0">${b.risks.map(r=>`<li>${r}</li>`).join('')}</ul></div></div>
+  <div class="out" style="margin-top:12px"><b>Dissent noted:</b> ${b.dissent}</div>
+  <strong style="display:block;margin-top:14px">Proposed action items</strong>
+  <table style="margin-top:8px"><tbody>${b.actions.map(([r,t])=>`<tr><td style="width:170px"><b>${AGENTS[r]?AGENTS[r].n:r}</b></td><td>${t}</td></tr>`).join('')}</tbody></table>
+  <div class="row" style="margin-top:14px"><button class="btn" onclick="bmPush()">Push action items to Comms →</button><span class="small" id="bmPushMsg"></span></div>
+  <div class="src" style="margin-top:10px">Decision-support only — recommendations require human approval before anything executes. The full transcript above is logged and auditable.</div></div>`;
+ el.scrollIntoView({behavior:'smooth',block:'nearest'});}
+window.convene=()=>{const sel=$("#bmTopic").value;let m;
+ if(sel==='custom'){const t=($("#bmCustom").value||'').trim();if(!t){$("#bmThread").innerHTML='<p class="small">Enter a topic to convene.</p>';return;}m=genericMeeting(t);}
+ else m=BOARDROOM[sel];
+ BM_CUR=m;const thread=$("#bmThread");thread.innerHTML='';$("#bmBrief").innerHTML='';$("#bmBrief").classList.add('hide');
+ bmTurn(m.turns,0,thread,m);};
+window.bmPush=()=>{if(!BM_CUR)return;const map={ops:'gm',sales:'rm',cfo:'gm',safety:'gm'};
+ const now=new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+ BM_CUR.brief.actions.forEach(([role,txt])=>{const to=map[role]||'gm';MSGS.push({id:Date.now()+Math.floor(Math.random()*1000),from:'ceo',to,pri:'normal',text:`[Boardroom action] ${txt}`,time:now,ack:false});});
+ buildNav();$("#bmPushMsg").innerHTML='<span style="color:var(--green-d)">✓ Action items sent to the Comms Center inboxes.</span>';};
 
 /* ---------- router (role-aware) ---------- */
 function buildNav(){const r=ROLES[ROLE];
